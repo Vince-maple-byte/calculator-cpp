@@ -58,7 +58,11 @@ void reversePolishNotationConverter(std::string& equation){
         }
         //if operator
         else if(isOperator(equation[i])){
-            if(equation[i] == '^'){
+            if(i < equation.size() - 1 && equation[i] == '-' && isdigit(equation[i+1])){
+                rpn += '-';
+                // std::cout << rpn << '\n';
+            }
+            else if(equation[i] == '^'){
                 stack.push('^');
             }
             else {
@@ -78,7 +82,7 @@ void reversePolishNotationConverter(std::string& equation){
             stack.pop();
         }
     }
-
+    std::cout << rpn << '\n';
     equation = rpn;
 }
 

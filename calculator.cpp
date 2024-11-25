@@ -43,37 +43,44 @@ double solve(std::string& equation) {
     std::stack<double> stackNumbers;
     std::string numAsString;
 
-    for(char c : equation) {
+    for(int i = 0; i < equation.size(); i++) {
+        char c = equation[i];
         if(isOperator(c)){
-            double firstNum = stackNumbers.top();
-            stackNumbers.pop();
-            double secondNum = stackNumbers.top();
-            stackNumbers.pop();
+            if(c == '-' && isdigit(equation[i+1])){
+                numAsString += '-';
+            }
+            else {
+                double firstNum = stackNumbers.top();
+                stackNumbers.pop();
+                double secondNum = stackNumbers.top();
+                stackNumbers.pop();
 
-            switch (c)
-            {
-            case '+':
-                stackNumbers.push(firstNum + secondNum);
-                break;
+                switch (c)
+                {
+                case '+':
+                    stackNumbers.push(secondNum + firstNum);
+                    break;
 
-            case '-':
-                stackNumbers.push(firstNum - secondNum);
-                break;
+                case '-':
+                    stackNumbers.push(secondNum - firstNum);
+                    break;
 
-            case '*':
-                stackNumbers.push(firstNum * secondNum);
-                break;
+                case '*':
+                    stackNumbers.push(secondNum * firstNum);
+                    break;
 
-            case '/':
-                stackNumbers.push(firstNum / secondNum);
-                break;
+                case '/':
+                    stackNumbers.push(secondNum / firstNum);
+                    break;
 
-            case '^':
-                stackNumbers.push(pow(firstNum, secondNum));
-                break;
+                case '^':
+                    stackNumbers.push(pow(secondNum, firstNum));
+                    break;
+                
+                default:
+                    break;
+                }
             
-            default:
-                break;
             }
         }
         else if(c == ','){
